@@ -69,9 +69,9 @@ module Typhoeus
         next if [:method, :cache_ttl].include?(k.to_sym)
         if new_option = renamed_options[k.to_sym]
           warn("Deprecated option #{k}. Please use #{new_option} instead.")
-          sanitized[new_option] = v
+          sanitized[new_option] = v.is_a?(Proc) ? v.call : v
         else
-          sanitized[k] = v
+          sanitized[k] = v.is_a?(Proc) ? v.call : v
         end
       end
       sanitized
